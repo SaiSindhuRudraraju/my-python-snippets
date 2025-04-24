@@ -45,3 +45,4 @@ provide a method to filter the product list based on rating
 provide a method to filter the product list based on stock
 provide a method to filter the product list based on availability
 provide a method to filter the product list based on discount
+'''
