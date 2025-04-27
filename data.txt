@@ -1,0 +1,4 @@
+Hello world
+This is a test file.
+This file is used for testing file handling in python
+This will overwrite the previous content.
