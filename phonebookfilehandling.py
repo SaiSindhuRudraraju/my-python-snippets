@@ -37,6 +37,7 @@ def load_phonebook():
         fp.close()
         print("Your contacts loaded")
     except FileNotFoundError:
+        print("Till now no contacts added. Please add your first contact :-)")
         pass
 
 
