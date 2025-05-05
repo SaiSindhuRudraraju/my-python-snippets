@@ -1,79 +1,39 @@
-print("Hello World")
-x = int(input("Enter a number"))
-y = int(input("Enter another number:"))
-z = int(input("Enter another number:"))
+import pickle
+import os
 
-print(type(x))
-print(x+y)
-print("%d + %d = %d" % (x, y, x+y))
-print(f"{x} + {y} = {x+y}")
+class Product:
+    def __init__(self, pid, name, price):
+        self.pid = pid
+        self.name = name
+        self.price = price
 
-if x>y:
-    print("x is greater than y")
-else:
-    print("y is greater than x")
+    def __str__(self):
+        return f"{{pid = {self.pid}, name = {self.name}, price = {self.price}}}"
 
-    
-if x>y:
-    print("x is greater than y")
-elif x==y:
-    print("Both are equal")
-else:
-    print("y is greater than x")
+# Step 1: Write products to file
+n = int(input("Enter number of products: "))
+index = {}
 
+with open("products.pickle", "wb") as fp:
+    for _ in range(n):
+        pid = int(input("Enter Product ID: "))
+        name = input("Enter Product Name: ")
+        price = float(input("Enter Product Price: "))
+        p = Product(pid, name, price)
+        index[pid] = fp.tell()  # Storing byte offset for each product
+        pickle.dump(p, fp)
 
-if x>y and x>z:
-    print("x is greater than y and z")
-elif y>z:
-    print("Y is greater than x and z")
-else:
-    print("z is greater than x and y")
+# Step 2: Use index for direct access
+search_pid = int(input("Enter Product ID to search: "))
 
-'''ternary operator'''
-message = "x is greater than y" if x>y else "y is greater than x"
-print(message)
+try:
+    with open("products.pickle", "rb") as fp:
+        if search_pid in index:
+            fp.seek(index[search_pid])  # Move directly to the correct position
+            product = pickle.load(fp)  # Load the exact product
+            print("Product found:", product)
+        else:
+            print("Product not found.")
 
-'''nested if'''
-
-if x>35 and y>35 and z>35:
-    if (x+y+z)/3 > 60:
-        print("A grade")
-    elif (x+y+z)/3 > 50:
-        print("B grade")
-    else:
-        print("C grade")
-else:
-    print("Fail")
-
-'''for loop'''
-
-for i in range(1,5,1):
-    print(i)
-
-for i in range(5):
-    print(i)
-
-x = [1,2,3,4,5,6]
-print("********")
-for i in range(5,1,-1):
-    print(i)
-
-'''while loop'''
-
-i=0
-while i<10:
-    if i==5:
-        break
-    print(i)
-    i+=1
-
-print("************")
-
-j=0
-while j<5:
-    print(j)
-    j += 1
-    if j==3:
-        break
-else:
-    print("Loop completed")
+except (EOFError, OSError):
+    print("Error accessing product.")
