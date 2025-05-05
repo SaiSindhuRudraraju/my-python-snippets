@@ -49,10 +49,8 @@ def show_contacts():
             print(f"        Name: {contact.name}")
             print(f"        Phone Number: {contact.phonenumber}")
 
-# Load phonebook at start
 load_phonebook()
 
-# Main loop
 while True:
     print("\nDo you want to add a new contact or see phone book?")
     choice = input("Enter your choice: Options: Add, Show, No: ").lower()
