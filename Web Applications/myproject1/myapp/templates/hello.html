@@ -1,0 +1,12 @@
+<h1>Hello {{message}}</h1>
+<form method="post" action="{% url 'save_product' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ product_form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+{% for product in productList %}
+    <p>{{product.name}} - {{product.price}}</p>
+    <img src="\images\ll_bannerfinal.jpg"
+    <img src="{{product.photo.url}}" alt="{{product.name}}" style="width: 100px; height: 100px;"/>
+{% endfor %}
